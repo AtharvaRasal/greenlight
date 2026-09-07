@@ -1,6 +1,6 @@
 // Teaser-poster generation with Google's image models via the google-genai SDK.
 // Tries the Gemini image model first (available on the free tier), then Imagen.
-import { GoogleGenAI, Modality } from "@google/genai";
+import { GoogleGenAI, HarmBlockThreshold, HarmCategory, Modality } from "@google/genai";
 
 export const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-2.5-flash-image";
 export const IMAGEN_MODEL = process.env.IMAGEN_MODEL || "imagen-4.0-fast-generate-001";
@@ -21,23 +21,40 @@ function makeClient(): GoogleGenAI {
 
 export type PosterResult = { dataUrl: string; model: string };
 
-async function viaGeminiImage(ai: GoogleGenAI, prompt: string): Promise<PosterResult | null> {
+const RELAXED_SAFETY = [
+  HarmCategory.HARM_CATEGORY_HARASSMENT,
+  HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+  HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+  HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+].map((category) => ({ category, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH }));
+
+async function viaGeminiImage(ai: GoogleGenAI, prompt: string, attempt = 0): Promise<PosterResult | null> {
+  const style =
+    attempt === 0
+      ? "Cinematic teaser poster key art, 16:9 widescreen, photoreal, dramatic lighting."
+      : "Painterly illustrated movie poster key art, 16:9 widescreen, atmospheric, stylized, no people's faces.";
   const res = await ai.models.generateContent({
     model: IMAGE_MODEL,
-    contents: `Cinematic teaser poster key art, 16:9 widescreen, photoreal, dramatic lighting. ${prompt} No text, no letters, no logos, no watermark.`,
-    config: { responseModalities: [Modality.IMAGE], imageConfig: { aspectRatio: "16:9" } },
+    // NB: the words "no watermark" trip Vertex's prompt safety filter — keep the negative prompt minimal.
+    contents: `${style} ${prompt} No text.`,
+    config: { responseModalities: [Modality.IMAGE], imageConfig: { aspectRatio: "16:9" }, safetySettings: RELAXED_SAFETY },
   });
-  for (const part of res.candidates?.[0]?.content?.parts ?? []) {
+  if (res.promptFeedback?.blockReason && attempt === 0) return viaGeminiImage(ai, prompt, 1);
+  const cand = res.candidates?.[0];
+  for (const part of cand?.content?.parts ?? []) {
     const data = part.inlineData?.data;
     if (data) return { dataUrl: `data:${part.inlineData?.mimeType || "image/png"};base64,${data}`, model: IMAGE_MODEL };
   }
-  return null;
+  const text = cand?.content?.parts?.map((p) => p.text ?? "").join(" ").trim();
+  throw new Error(
+    `no image returned (finishReason=${cand?.finishReason ?? "?"}${res.promptFeedback?.blockReason ? `, blocked=${res.promptFeedback.blockReason}` : ""}${text ? `, text="${text.slice(0, 120)}"` : ""})`,
+  );
 }
 
 async function viaImagen(ai: GoogleGenAI, prompt: string): Promise<PosterResult | null> {
   const res = await ai.models.generateImages({
     model: IMAGEN_MODEL,
-    prompt: `Cinematic teaser poster key art, photoreal, dramatic lighting. ${prompt} No text, no letters, no logos.`,
+    prompt: `Cinematic teaser poster key art, photoreal, dramatic lighting. ${prompt} No text.`,
     config: { numberOfImages: 1, aspectRatio: "16:9" },
   });
   const img = res.generatedImages?.[0]?.image;

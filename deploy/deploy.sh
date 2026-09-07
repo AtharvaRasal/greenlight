@@ -25,6 +25,10 @@ PROJECT_NUMBER=$(gcloud projects describe "$PROJECT" --format='value(projectNumb
 SA="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
 echo "▶ granting Vertex AI + secret access to $SA"
 gcloud projects add-iam-policy-binding "$PROJECT" --member="serviceAccount:$SA" --role=roles/aiplatform.user --condition=None >/dev/null
+# New projects: the default compute SA (used by Cloud Build for --source deploys) needs build + storage + logging rights.
+for role in roles/cloudbuild.builds.builder roles/storage.objectViewer roles/artifactregistry.writer roles/logging.logWriter; do
+  gcloud projects add-iam-policy-binding "$PROJECT" --member="serviceAccount:$SA" --role="$role" --condition=None >/dev/null
+done
 gcloud secrets add-iam-policy-binding parallel-api-key --member="serviceAccount:$SA" --role=roles/secretmanager.secretAccessor >/dev/null
 
 echo "▶ deploying $SERVICE to Cloud Run ($REGION)"

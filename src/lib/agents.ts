@@ -134,7 +134,7 @@ Write two things as JSON:
    ## Recommendation  (2-4 sentences, decisive)
    ## Sources  (bulleted URLs from the research)
    Use the numbers from the analysis; cite source URLs inline where useful.
-2. "posterPrompt": art direction for a cinematic teaser poster (1-2 sentences): setting, key visual metaphor, lighting, palette, mood. Photoreal, widescreen. Explicitly: no text, no letters, no logos, no watermarks in the image.
+2. "posterPrompt": art direction for a cinematic teaser poster (1-2 sentences): setting, key visual metaphor, lighting, palette, mood. Photoreal, widescreen. Do not mention text, logos or watermarks (the renderer handles that). Keep it suggestive rather than graphic (no gore, corpses, weapons pointed at people, or real celebrities) so an image model will render it.
 
 LOGLINE:
 ${stateStr(ctx, "logline")}
