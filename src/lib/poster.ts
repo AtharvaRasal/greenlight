@@ -71,12 +71,16 @@ export async function generatePoster(prompt: string): Promise<{ result: PosterRe
     return { result: null, error: (e as Error).message };
   }
   const errors: string[] = [];
-  for (const fn of [viaGeminiImage, viaImagen]) {
+  const attempts: [string, (ai: GoogleGenAI, prompt: string) => Promise<PosterResult | null>][] = [
+    [IMAGE_MODEL, viaGeminiImage],
+    [IMAGEN_MODEL, viaImagen],
+  ];
+  for (const [label, fn] of attempts) {
     try {
       const r = await fn(ai, prompt);
       if (r) return { result: r };
     } catch (e) {
-      errors.push(`${fn.name}: ${(e as Error).message?.slice(0, 200)}`);
+      errors.push(`${label}: ${(e as Error).message?.slice(0, 200)}`);
     }
   }
   return { result: null, error: errors.join(" | ") };

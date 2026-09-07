@@ -4,7 +4,7 @@
 
 Built for **Agentic Cinema: The Blockbuster Hackathon** (Google Cloud × Devpost) — **Parallel track**.
 
-- **Live demo:** _Cloud Run URL — added at submission_
+- **Live demo:** https://greenlight-206266360535.us-central1.run.app (Cloud Run, us-central1)
 - **Demo video:** _YouTube — added at submission_
 - **License:** MIT
 

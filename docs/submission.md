@@ -48,7 +48,7 @@ Task API deep-research mode for franchise-level packages, comps chart from live 
 google-adk · gemini · vertex-ai · google-genai · parallel-web · remotion · next.js · typescript · cloud-run · secret-manager · tailwind · zod
 
 ## Links
-- Try it: _Cloud Run URL_
+- Try it: https://greenlight-206266360535.us-central1.run.app
 - Code: https://github.com/AtharvaRasal/greenlight (MIT)
 - Video: _YouTube URL_
 
