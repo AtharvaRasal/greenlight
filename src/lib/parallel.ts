@@ -33,14 +33,39 @@ const MAX_EXCERPT_CHARS = 900;
  * research; results come back in <5s. Excerpts are trimmed so the agent's
  * context stays small.
  */
-export async function parallelSearch(objective: string, queries: string[]): Promise<SearchOutcome> {
+export type DomainFocus = "box_office" | "trade_press" | "any";
+
+const FOCUS_DOMAINS: Record<DomainFocus, string[] | undefined> = {
+  box_office: ["boxofficemojo.com", "the-numbers.com", "wikipedia.org"],
+  trade_press: [
+    "variety.com",
+    "deadline.com",
+    "hollywoodreporter.com",
+    "flixpatrol.com",
+    "netflix.com",
+    "indiewire.com",
+    "screendaily.com",
+    "whats-on-netflix.com",
+  ],
+  any: undefined,
+};
+
+export async function parallelSearch(
+  objective: string,
+  queries: string[],
+  focus: DomainFocus = "any",
+): Promise<SearchOutcome> {
   const started = Date.now();
+  const include = FOCUS_DOMAINS[focus];
   const res = await getParallelClient().search({
     objective,
     search_queries: queries.slice(0, 4),
     mode: "advanced",
     max_chars_total: 9000,
-    advanced_settings: { max_results: 6 },
+    advanced_settings: {
+      max_results: 6,
+      ...(include ? { source_policy: { include_domains: include } } : {}),
+    },
   });
 
   const hits: SearchHit[] = (res.results ?? []).map((r) => ({
@@ -54,6 +79,7 @@ export async function parallelSearch(objective: string, queries: string[]): Prom
     hits,
     call: {
       tool: "parallel_search",
+      focus,
       objective,
       queries,
       resultCount: hits.length,

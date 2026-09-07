@@ -67,6 +67,7 @@ export type Source = {
 
 export type ToolCall = {
   tool: string;
+  focus?: "box_office" | "trade_press" | "any";
   objective: string;
   queries: string[];
   resultCount: number;

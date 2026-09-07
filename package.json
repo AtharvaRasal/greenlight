@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "agent:run": "tsx scripts/run.ts",
+    "render": "tsx scripts/render.ts",
+    "remotion:studio": "remotion studio src/remotion/index.ts"
   },
   "dependencies": {
     "@google/adk": "^2.0.0",
@@ -34,5 +37,7 @@
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
     "typescript": "^5"
-  }
+  },
+  "description": "Greenlight — the studio development-exec agent (Gemini + Google ADK + Parallel Search + Remotion)",
+  "license": "MIT"
 }

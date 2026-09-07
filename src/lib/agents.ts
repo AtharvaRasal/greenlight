@@ -28,9 +28,14 @@ export function buildParallelSearchTool(onSearch: (o: SearchOutcome) => void) {
     parameters: z.object({
       objective: z.string().describe("What you are trying to learn, in one self-contained sentence"),
       search_queries: z.array(z.string()).min(1).max(3).describe("2-3 short keyword queries"),
+      domain_focus: z
+        .enum(["box_office", "trade_press", "any"])
+        .describe(
+          "box_office = restrict to Box Office Mojo / The Numbers / Wikipedia (budgets & grosses); trade_press = Variety, Deadline, THR, FlixPatrol, Netflix (market, streaming, development news); any = open web",
+        ),
     }),
-    execute: async ({ objective, search_queries }) => {
-      const outcome = await parallelSearch(objective, search_queries);
+    execute: async ({ objective, search_queries, domain_focus }) => {
+      const outcome = await parallelSearch(objective, search_queries, domain_focus);
       onSearch(outcome);
       return {
         results: outcome.hits.map((h) => ({
@@ -54,14 +59,14 @@ export function buildGreenlightAgent(onSearch: (o: SearchOutcome) => void) {
     instruction: `You are the SCOUT, a research analyst in a film & TV studio's development department.
 The user gives you a logline for a potential project. Your job is to gather hard evidence using the parallel_search tool.
 
-Make 3 to 5 separate parallel_search calls, each with a distinct objective, covering:
-1. Comparable released titles (same genre/tone/scale, ideally last 10 years): production budget, worldwide box office, or streaming platform + performance signals (viewership, chart ranking).
-2. The genre's recent market trend: growth, saturation, notable hits/misses, buyer appetite (studios/streamers).
+Make 4 to 6 separate parallel_search calls, each with a distinct objective, covering:
+1. Comparable released titles (same genre/tone/scale, ideally last 10 years). Think globally: include well-documented Hollywood and international comps, not only local-language ones. First call: domain_focus "box_office" to get production budget AND worldwide box office for 5-6 named comps (name the titles explicitly in the queries, e.g. "<title> box office budget"). Second call: domain_focus "trade_press" for streaming comps (platform, viewership, chart ranking).
+2. The genre's recent market trend (domain_focus "trade_press"): growth, saturation, notable hits/misses, buyer appetite (studios/streamers).
 3. Audience: who watches this kind of title, demographic and geographic notes.
 4. Anything in development or recently announced that resembles this logline (competitive risk).
 
 Then write RESEARCH NOTES in markdown:
-- "## Comparable titles": one bullet per comp (aim for 5) with year, budget, worldwide gross or platform/performance, and the supporting URL in square brackets. Write "n/a" when a figure was not found. Never invent numbers.
+- "## Comparable titles": one bullet per comp (aim for 5-6, at least 3 with BOTH a budget and a worldwide gross figure) with year, budget, worldwide gross or platform/performance, and the supporting URL in square brackets. Write "n/a" when a figure was not found. Never invent numbers. If your first pass lacks numbers for a comp, run one more box_office search naming that title.
 - "## Market trend" (3-6 bullets with figures + URLs)
 - "## Audience" (2-4 bullets)
 - "## Competitive landscape" (1-3 bullets)
