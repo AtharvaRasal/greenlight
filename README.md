@@ -8,6 +8,10 @@ Built for **Agentic Cinema: The Blockbuster Hackathon** (Google Cloud × Devpost
 - **Demo video:** _YouTube — added at submission_
 - **License:** MIT
 
+![Verdict banner and the Remotion pitch reel playing over Gemini-generated key art](docs/screenshots/verdict-reel.jpeg)
+
+![The agent team and live console: every Parallel search shown as it happens](docs/screenshots/agents-console.jpeg)
+
 ---
 
 ## The problem
