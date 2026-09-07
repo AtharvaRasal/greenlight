@@ -33,7 +33,7 @@ export async function runGreenlight(
     emit({ type: "tool", call: o.call });
   };
 
-  const agent = buildGreenlightAgent(onSearch);
+  const agent = buildGreenlightAgent(onSearch, (message) => emit({ type: "note", message: `parallel_search error: ${message.slice(0, 160)}` }));
   const runner = new InMemoryRunner({ agent, appName: APP });
   const userId = "exec";
   const session = await runner.sessionService.createSession({ appName: APP, userId, state: { logline } });

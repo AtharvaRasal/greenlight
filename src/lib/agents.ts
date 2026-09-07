@@ -18,7 +18,7 @@ const stateStr = (ctx: ReadonlyContext, key: string): string => {
 };
 
 /** Builds the tool set for one run so that tool calls can be reported to the UI. */
-export function buildParallelSearchTool(onSearch: (o: SearchOutcome) => void) {
+export function buildParallelSearchTool(onSearch: (o: SearchOutcome) => void, onError?: (message: string) => void) {
   return new FunctionTool({
     name: "parallel_search",
     description:
@@ -35,7 +35,21 @@ export function buildParallelSearchTool(onSearch: (o: SearchOutcome) => void) {
         ),
     }),
     execute: async ({ objective, search_queries, domain_focus }) => {
-      const outcome = await parallelSearch(objective, search_queries, domain_focus);
+      let outcome;
+      try {
+        outcome = await parallelSearch(objective, search_queries, domain_focus);
+      } catch (e) {
+        // One retry after a short pause (rate limits / transient errors), then report to the model.
+        await new Promise((r) => setTimeout(r, 1500));
+        try {
+          outcome = await parallelSearch(objective, search_queries, domain_focus);
+        } catch (e2) {
+          const message = (e2 as Error).message ?? String(e2);
+          onError?.(message);
+          return { error: `parallel_search failed: ${message.slice(0, 200)}. Try again with different queries.` };
+        }
+        void e;
+      }
       onSearch(outcome);
       return {
         results: outcome.hits.map((h) => ({
@@ -49,12 +63,12 @@ export function buildParallelSearchTool(onSearch: (o: SearchOutcome) => void) {
   });
 }
 
-export function buildGreenlightAgent(onSearch: (o: SearchOutcome) => void) {
+export function buildGreenlightAgent(onSearch: (o: SearchOutcome) => void, onError?: (message: string) => void) {
   const scout = new LlmAgent({
     name: "scout",
     description: "Studio research analyst who gathers comparable-title and market data from the live web.",
     model: TEXT_MODEL,
-    tools: [buildParallelSearchTool(onSearch)],
+    tools: [buildParallelSearchTool(onSearch, onError)],
     outputKey: "research",
     instruction: `You are the SCOUT, a research analyst in a film & TV studio's development department.
 The user gives you a logline for a potential project. Your job is to gather hard evidence using the parallel_search tool.
