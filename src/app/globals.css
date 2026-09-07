@@ -1,26 +1,63 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #07070b;
+  --foreground: #f4f1ea;
+  --panel: #101017;
+  --panel-2: #16161f;
+  --line: #23232f;
+  --muted: #9a978f;
+  --gold: #e8b04b;
+  --green: #3ddc84;
+  --amber: #f5b942;
+  --red: #ff5c5c;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --color-gold: var(--gold);
+  --color-green: var(--green);
+  --color-amber: var(--amber);
+  --color-red: var(--red);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background-image:
+    radial-gradient(ellipse at 20% 0%, rgba(232, 176, 75, 0.08), transparent 50%),
+    radial-gradient(ellipse at 90% 100%, rgba(61, 220, 132, 0.05), transparent 45%);
+  background-attachment: fixed;
 }
+
+.memo h1, .memo h2, .memo h3 { font-weight: 700; margin-top: 1.4em; margin-bottom: 0.5em; }
+.memo h1 { font-size: 1.6rem; }
+.memo h2 { font-size: 1.25rem; color: var(--gold); }
+.memo h3 { font-size: 1.05rem; }
+.memo p { margin: 0.6em 0; line-height: 1.6; }
+.memo ul, .memo ol { padding-left: 1.4em; margin: 0.6em 0; }
+.memo li { margin: 0.25em 0; line-height: 1.55; }
+.memo ul { list-style: disc; }
+.memo ol { list-style: decimal; }
+.memo strong { color: var(--foreground); }
+.memo a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+.memo table { border-collapse: collapse; width: 100%; margin: 1em 0; font-size: 0.9rem; }
+.memo th, .memo td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; }
+.memo th { background: var(--panel-2); }
+.memo blockquote { border-left: 3px solid var(--gold); padding-left: 1em; color: var(--muted); }
+.memo code { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; font-family: var(--font-geist-mono), monospace; font-size: 0.85em; }
+
+@keyframes pulse-dot { 0%, 100% { opacity: 1 } 50% { opacity: 0.3 } }
+.pulse { animation: pulse-dot 1.2s ease-in-out infinite; }
