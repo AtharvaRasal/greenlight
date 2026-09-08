@@ -8,7 +8,9 @@ Built for **Agentic Cinema: The Blockbuster Hackathon** (Google Cloud × Devpost
 - **Demo video:** _YouTube — added at submission_
 - **License:** MIT
 
-![Verdict banner and the Remotion pitch reel playing over Gemini-generated key art](docs/screenshots/verdict-reel.jpeg)
+![Home: pitch a film in one sentence, three steps, examples](docs/screenshots/home.jpeg)
+
+![Verdict card and the Remotion pitch reel playing over Gemini-generated key art, with one-click MP4 download](docs/screenshots/verdict-reel.jpeg)
 
 ![The agent team and live console: every Parallel search shown as it happens](docs/screenshots/agents-console.jpeg)
 
