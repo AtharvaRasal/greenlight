@@ -71,6 +71,8 @@ Type (or click Example 2): the whale/volcano logline. Click *Run the greenlight 
 **1:40–2:20 · The result**
 - Verdict banner: read the decision and the headline. "Five Parallel searches, twenty-two sources, one Gemini model."
 - Reel plays: let 15 s run. "Remotion renders this from the agent's JSON — title over the generated poster, comps chart, market stats, risks, budget, verdict."
+- Click *Download as MP4* and say: "And it exports as a real MP4, rendered on Cloud Run, so you can send it to anyone." (Start this early or pre-record: the render takes 1–2 minutes. Cut to the downloaded file playing in a video player for 5 s.)
+- Click the *How it works* button top-right for 5 s: "Built for people who don't code — a guide explains every step."
 - Click *Greenlight memo*: scroll once. Click *Comps & market*: "every comp links to its source." Click *Research & sources*.
 
 **2:20–2:45 · How it's built (show the repo README diagram for 10 s)**

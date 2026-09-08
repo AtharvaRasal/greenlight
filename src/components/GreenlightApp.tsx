@@ -244,7 +244,7 @@ export function GreenlightApp() {
         {/* hero */}
         {!started && (
           <header className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">
+            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.05] text-balance">
               Pitch a film in one sentence.
               <br />
               <span className="text-gold">Get a studio decision in 90 seconds.</span>
@@ -414,7 +414,7 @@ export function GreenlightApp() {
 
             <div>
               <div className="text-sm text-muted mb-2">Now explore what the team made for you:</div>
-              <div className="flex gap-1 border-b border-line overflow-x-auto">
+              <div className="flex gap-1 border-b border-line overflow-x-auto [scrollbar-width:none]">
                 {(
                   [
                     ["video", "Watch the pitch video"],

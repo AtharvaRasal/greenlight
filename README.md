@@ -38,7 +38,7 @@ logline ──▶ SCOUT (Gemini + Parallel Search tool) ──▶ research notes
             PITCH REEL (Remotion) ──▶ 30-second animated reel: title · logline · comps chart · market · risks · budget · verdict
 ```
 
-Everything streams to the browser as it happens (Server-Sent Events): which agent is working, every Parallel search with its queries and result count, and the Scout's notes as they're written.
+Everything streams to the browser as it happens (Server-Sent Events): which agent is working, every Parallel search with its queries and result count, and the Scout's notes as they're written. The UI is written for non-technical users: a three-step explainer, plain-language stage names (Researcher, Analyst, Writer, Poster artist), a verdict card that says what GREENLIGHT / DEVELOP / PASS means, and a **How it works** guide in the top-right corner. The pitch video downloads as an MP4 with one click; the memo downloads as a text file.
 
 ## Architecture
 
@@ -48,7 +48,7 @@ Everything streams to the browser as it happens (Server-Sent Events): which agen
 | Models | **Gemini** (`gemini-2.5-flash` by default) via ADK; **Gemini image model / Imagen** via `@google/genai` for the poster | `src/lib/agents.ts`, `src/lib/poster.ts` |
 | Web research | **Parallel Search API** (`parallel-web` SDK) wrapped as an ADK `FunctionTool` the Scout calls 4–6× per run, with `source_policy` domain focus (box-office sites vs trade press) | `src/lib/parallel.ts` |
 | Structured outputs | Zod schemas → Gemini response schemas (via ADK `outputSchema`) | `src/lib/schemas.ts` |
-| Pitch reel | **Remotion** composition rendered live in the browser with `@remotion/player`; MP4 export via `@remotion/renderer` | `src/remotion/`, `scripts/render.ts` |
+| Pitch reel | **Remotion** composition rendered live in the browser with `@remotion/player`; one-click **MP4 export** rendered server-side on Cloud Run with `@remotion/renderer` (prebuilt bundle + headless Chrome in the image) | `src/remotion/`, `src/app/api/render/route.ts`, `scripts/bundle-remotion.ts` |
 | App | Next.js 16 (App Router) · streaming API route · Tailwind | `src/app/`, `src/components/` |
 | Hosting | **Google Cloud Run** (Vertex AI / Gemini Enterprise Agent Platform for models, Secret Manager for the Parallel key) | `Dockerfile`, `deploy/deploy.sh` |
 
