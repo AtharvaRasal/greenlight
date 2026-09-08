@@ -61,3 +61,5 @@ body {
 
 @keyframes pulse-dot { 0%, 100% { opacity: 1 } 50% { opacity: 0.3 } }
 .pulse { animation: pulse-dot 1.2s ease-in-out infinite; }
+
+@keyframes slide { 0% { transform: translateX(-100%) } 100% { transform: translateX(300%) } }
