@@ -50,7 +50,7 @@ google-adk · gemini · vertex-ai · google-genai · parallel-web · remotion ·
 ## Links
 - Try it: https://greenlight-206266360535.us-central1.run.app
 - Code: https://github.com/AtharvaRasal/greenlight (MIT)
-- Video: _YouTube URL_
+- Video: https://youtu.be/JNROIFDCw7o
 
 ---
 

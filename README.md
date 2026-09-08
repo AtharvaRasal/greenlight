@@ -5,7 +5,7 @@
 Built for **Agentic Cinema: The Blockbuster Hackathon** (Google Cloud × Devpost) — **Parallel track**.
 
 - **Live demo:** https://greenlight-206266360535.us-central1.run.app (Cloud Run, us-central1)
-- **Demo video:** _YouTube — added at submission_
+- **Demo video:** https://youtu.be/JNROIFDCw7o (3 min)
 - **License:** MIT
 
 ![Home: pitch a film in one sentence, three steps, examples](docs/screenshots/home.jpeg)
