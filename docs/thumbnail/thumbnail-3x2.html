@@ -1,0 +1,37 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Greenlight thumbnail 3:2</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+  html,body{margin:0;background:#07070b;overflow:hidden;}
+  .card{position:relative;width:1200px;height:800px;overflow:hidden;background:#07070b;font-family:"Sora",system-ui,sans-serif;color:#f4f1ea;}
+  .art{position:absolute;inset:0;background:url("../../out/poster-test.png") 70% center/cover no-repeat;opacity:.95;transform:scale(1.02);}
+  .shade{position:absolute;inset:0;background:
+    linear-gradient(90deg,rgba(7,7,11,.97) 0%,rgba(7,7,11,.93) 40%,rgba(7,7,11,.55) 66%,rgba(7,7,11,.12) 100%),
+    linear-gradient(180deg,rgba(7,7,11,.25) 0%,rgba(7,7,11,0) 40%,rgba(7,7,11,.8) 100%);}
+  .brand{position:absolute;left:64px;top:60px;display:flex;align-items:center;gap:14px;font-weight:700;font-size:30px;letter-spacing:-.01em;}
+  .dot{width:16px;height:16px;border-radius:50%;background:#e8b04b;box-shadow:0 0 28px rgba(232,176,75,.9);}
+  .brand span{color:#9a978f;font-weight:500;font-size:20px;margin-left:6px;}
+  h1{position:absolute;left:64px;top:210px;margin:0;width:820px;font-size:60px;line-height:1.06;font-weight:800;letter-spacing:-.025em;}
+  h1 em{font-style:normal;color:#e8b04b;}
+  .sub{position:absolute;left:64px;top:492px;width:660px;font-size:23px;line-height:1.42;color:#c9c5ba;font-weight:500;}
+  .stamp{position:absolute;right:76px;top:104px;transform:rotate(-6deg);border:7px solid #3ddc84;color:#3ddc84;border-radius:16px;padding:6px 26px;font-size:52px;font-weight:800;letter-spacing:.06em;box-shadow:0 0 70px rgba(61,220,132,.35);background:rgba(7,7,11,.35);}
+  .stack{position:absolute;left:64px;bottom:64px;display:flex;gap:12px;flex-wrap:nowrap;width:900px;font-family:"IBM Plex Mono",Consolas,monospace;font-size:16px;}
+  .stack span{border:1px solid rgba(244,241,234,.25);border-radius:999px;padding:7px 14px;white-space:nowrap;color:#e9e5da;background:rgba(7,7,11,.55);}
+  .stack span.gold{border-color:#e8b04b;color:#e8b04b;}
+  .track{position:absolute;right:64px;bottom:68px;text-align:right;font-family:"IBM Plex Mono",Consolas,monospace;font-size:16px;color:#c9c5ba;line-height:1.7;}
+  .track b{color:#f4f1ea;font-weight:500;}
+</style></head>
+<body>
+<div class="card">
+  <div class="art"></div>
+  <div class="shade"></div>
+  <div class="brand"><i class="dot"></i>Greenlight<span>the studio development-exec agent</span></div>
+  <h1>Pitch a film in one sentence.<br><em>Get a studio decision in 90 seconds.</em></h1>
+  <div class="sub">Live web research · verdict with sources · one-page memo · 30-second pitch video, downloadable as MP4</div>
+  <div class="stamp">GREENLIGHT</div>
+  <div class="stack">
+    <span class="gold">Gemini · Google ADK</span><span class="gold">Parallel Search API</span><span>Vertex AI</span><span>Remotion</span><span>Cloud Run</span>
+  </div>
+  <div class="track"><b>Agentic Cinema</b> · Google Cloud × Devpost<br>Parallel track</div>
+</div>
+</body></html>
