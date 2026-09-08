@@ -247,7 +247,7 @@ export function GreenlightApp() {
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.05]">
               Pitch a film in one sentence.
               <br />
-              <span className="text-gold">Get the studio&apos;s decision in 90 seconds.</span>
+              <span className="text-gold">Get a studio decision in 90 seconds.</span>
             </h1>
             <p className="text-muted mt-5 text-lg leading-relaxed">
               Greenlight reads your idea, researches similar films on the live web, and hands you a clear verdict, a one-page

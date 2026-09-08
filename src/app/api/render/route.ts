@@ -49,10 +49,11 @@ export async function POST(req: Request) {
         codec: "h264",
         outputLocation,
         inputProps,
-        // 1280x720 keeps a 30 s render around a minute on 2 vCPUs.
+        // 1280x720 + veryfast x264 keeps a 30 s render to roughly a minute on 4 vCPUs.
         scale: 2 / 3,
         crf: 22,
-        concurrency: Number(process.env.REMOTION_CONCURRENCY || 2),
+        concurrency: Number(process.env.REMOTION_CONCURRENCY || 4),
+        x264Preset: "veryfast",
         chromiumOptions: { gl: "swangle", disableWebSecurity: false },
         timeoutInMilliseconds: 120_000,
       });
